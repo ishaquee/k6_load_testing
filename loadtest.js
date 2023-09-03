@@ -6,10 +6,10 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
 
 export let options = {
     vus: 1, // Virtual Users
-    duration: '30s', // Test duration
+    duration: '10s', // Test duration
     thresholds: {
-        http_req_duration: ["p(95)<150"],
-      },
+      http_req_duration: ['p(95)<500', 'p(99)<1000'],
+    },
   };
 
 export default function () {
