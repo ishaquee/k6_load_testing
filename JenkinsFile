@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/ishaquee/k6_load_testing.git']]])
             }
         }
         stage('Run Performance Tests') {
@@ -15,9 +15,5 @@ pipeline {
                 sh 'k6 run loadtest.js'
             }
         }
-        stage('Preparation') {
-              steps {
-            cleanWs()
-    ̦̦̦̦}}
     }
 }
