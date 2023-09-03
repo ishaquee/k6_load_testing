@@ -12,7 +12,8 @@ pipeline {
         sh 'chmod +x ./setup_k6.sh' // Remove 'sudo' from this line
         echo 'Running K6 performance tests...'
         sh '/usr/local/bin/k6 run loadtest.js' // Specify the full path to k6
-        sh '/usr/local/bin/k6 report result.json --out report.html'    // Generate HTML report from JSON
+        sh 'k6 run --out json=result.json loadtest.js' // Run k6 and output to JSON
+        sh 'k6 run --out html=report.html loadtest.js'  // Generate HTML report directly
 
     } }
     stage('Publish HTML Report') {
