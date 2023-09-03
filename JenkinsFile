@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo 'Running K6 performance tests...'
                 sh '/usr/local/bin/k6 run loadtest.js' // Run k6 and output to JSON
-                sh 'mv report.html "$WORKSPACE"' // Use double quotes around $WORKSPACE
+                sh 'mv summary.html "$WORKSPACE"' // Use double quotes around $WORKSPACE
             }
         }
     }
