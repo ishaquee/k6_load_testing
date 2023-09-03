@@ -13,5 +13,10 @@ pipeline {
                 sh 'mv summary.html $WORKSPACE' // Move the generated HTML report to the workspace
             }
         }
+        post {
+        always {
+            publishHTML(target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'summary.html', reportName: 'K6 HTML Report'])
+        }
+    }
 }
 }
