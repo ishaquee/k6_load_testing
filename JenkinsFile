@@ -9,20 +9,9 @@ pipeline {
         stage('Run Performance Tests') {
             steps {
                 echo 'Running K6 performance tests...'
-                sh '/usr/local/bin/k6 run --out json=result.json loadtest.js' // Run k6 and output to JSON
+                sh '/usr/local/bin/k6 run loadtest.js' // Run k6 and output to JSON
+                sh 'mv summary.html $WORKSPACE' // Move the generated HTML report to the workspace
             }
         }
-        stage('Generate HTML Report') {
-            steps {
-                echo 'Generating HTML report...'
-                sh 'k6-to-html result.json' // Generate HTML report from JSON
-                sh 'mv report.html $WORKSPACE' // Move the generated HTML report to the workspace
-            }
-        }
-    }
-    post {
-        always {
-            publishHTML(target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'report.html', reportName: 'K6 HTML Report'])
-        }
-    }
+}
 }

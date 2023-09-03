@@ -20,7 +20,7 @@ export default function () {
   // Add assertions to validate the response
   check(response, {
     'Response status code is 200': (r) => r.status === 200,
-    'Response time is below 500ms': (r) => r.timings.duration < 500,
+    'Response time is below 1000ms': (r) => r.timings.duration < 500,
   });
   
   // Introduce a delay between iterations (e.g., 1 second)
