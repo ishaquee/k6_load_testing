@@ -11,7 +11,7 @@ pipeline {
         echo 'Installing k6'
         sh 'chmod +x ./setup_k6.sh' // Remove 'sudo' from this line
         echo 'Running K6 performance tests...'
-        sh 'k6 run loadtest.js' // Remove 'sudo' from this line
+        sh '/usr/bin/k6 run loadtest.js' // Specify the full path to k6
     }
 }
 
