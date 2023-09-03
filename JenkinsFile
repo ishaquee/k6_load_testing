@@ -7,13 +7,16 @@ pipeline {
             }
         }
         stage('Run Performance Tests') {
-            steps {
-                echo 'Installing k6'
-                sh 'chmod +x setup_k6.sh'
-                sh './setup_k6.sh'
-                echo 'Running K6 performance tests...'
-                sh 'k6 run loadtest.js'
-            }
-        }
+    steps {
+        echo 'Installing k6'
+        sh 'chmod +x setup_k6.sh'
+        echo 'Before running setup_k6.sh'
+        sh './setup_k6.sh'
+        echo 'After running setup_k6.sh'
+        echo 'Running K6 performance tests...'
+        sh 'k6 run loadtest.js'
+    }
+}
+
     }
 }
