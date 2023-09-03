@@ -6,27 +6,23 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/ishaquee/k6_load_testing.git']]])
             }
         }
-       stage('Run Performance Tests') {
-    steps {
-        echo 'Installing k6'
-        sh 'chmod +x ./setup_k6.sh' // Remove 'sudo' from this line
-        echo 'Running K6 performance tests...'
-        sh '/usr/local/bin/k6 run --out json=result.json loadtest.js' // Run k6 and output to JSON
-
-
-    } }
-    stage('Convert JSON to HTML') {
-    steps {
-        echo 'Converting JSON to HTML...'
-        sh 'npm install -g k6-to-html'
-        sh 'k6-to-html result.json'
-        sh 'mv report.html $WORKSPACE' // Move the generated HTML report to the workspace
+        stage('Run Performance Tests') {
+            steps {
+                echo 'Running K6 performance tests...'
+                sh '/usr/local/bin/k6 run --out json=result.json loadtest.js' // Run k6 and output to JSON
+            }
+        }
+        stage('Generate HTML Report') {
+            steps {
+                echo 'Generating HTML report...'
+                sh 'k6-to-html result.json' // Generate HTML report from JSON
+                sh 'mv report.html $WORKSPACE' // Move the generated HTML report to the workspace
+            }
+        }
     }
-}
+    post {
+        always {
+            publishHTML(target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'report.html', reportName: 'K6 HTML Report'])
+        }
     }
-     post {
-    always {
-        archiveArtifacts artifacts: 'report.html', allowEmptyArchive: true
-    }
-}
 }
