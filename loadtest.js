@@ -16,8 +16,6 @@ export default function () {
   // Send an HTTP GET request to a specific API endpoint
   const response = http.get(`${BASE_URL}/posts/1`);
   
-  console.log(`Request to /api/resource returned status code: ${response.status}`);
-
 
   // Add assertions to validate the response
   check(response, {
