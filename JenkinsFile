@@ -6,15 +6,12 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/ishaquee/k6_load_testing.git']]])
             }
         }
-        stage('Run Performance Tests') {
+       stage('Run Performance Tests') {
     steps {
         echo 'Installing k6'
-        sh 'chmod +x setup_k6.sh'
-        echo 'Before running setup_k6.sh'
-        sh './setup_k6.sh'
-        echo 'After running setup_k6.sh'
+        sh './setup_k6.sh' // Remove 'sudo' from this line
         echo 'Running K6 performance tests...'
-        sh 'k6 run loadtest.js'
+        sh 'k6 run loadtest.js' // Remove 'sudo' from this line
     }
 }
 
