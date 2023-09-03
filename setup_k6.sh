@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 # This script installs k6 and performs any necessary setup without using sudo.
 
 # Update the package list
