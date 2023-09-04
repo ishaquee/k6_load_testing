@@ -9,7 +9,7 @@ pipeline {
         stage('Run Performance Tests') {
             steps {
                 echo 'Running K6 performance tests...'
-                sh '/usr/local/bin/k6 run loadtest.js' // Run k6 and output to JSON
+                sh '/usr/local/bin/k6 run getPost.js' // Run k6 and output to JSON
             }
         }
     }
