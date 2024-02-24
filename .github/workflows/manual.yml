@@ -7,29 +7,21 @@ on:
 
 jobs:
   performance-tests:
+    name: Run k6 test
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install k6
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ca-certificates
-          sudo apt-get install -y unzip
-          curl -L -o k6.tar.gz https://github.com/loadimpact/k6/releases/download/v0.34.1/k6-v0.34.1-linux-amd64.tar.gz
-          tar xf k6.tar.gz
-          sudo mv k6 /usr/local/bin/
-
-      - name: Verify k6 installation
-        run: k6 version
-
-      - name: Run Performance Tests
-        run: k6 run getPosts.js
+      - name: Run k6 test
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: getPosts.js
+          flags: --vus 50 --duration 10s
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v2
         with:
           name: k6-test-results
-          path: summary.html
+          path: k6-reports
